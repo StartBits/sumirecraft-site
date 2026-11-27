@@ -10,6 +10,7 @@
       "Edit(/.github/**)",
       "Edit(/docfx.json)",
       "Edit(/dotnet-tools.json)",
+      "Edit(/global.json)",
       "Edit(/.gitmodules)",
       "Edit(/.gitattributes)",
       "Edit(/.editorconfig)",

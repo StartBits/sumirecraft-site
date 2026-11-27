@@ -40,11 +40,17 @@ jobs:
           submodules: true
           persist-credentials: false
 
-      # The SDK the library itself builds with, so DocFX reads its projects as its own build does.
+      # The SDK the library itself builds with (global.json, kept in step with the library's), so
+      # DocFX reads its projects as its own build does. Without it the runner's newest SDK is used.
       - name: Setup .NET
         uses: actions/setup-dotnet@0f4a354dd5547a28c70b7853dbd95d5b67886e73 # v6.1.0
         with:
-          global-json-file: external/SumireCraft.Maui/global.json
+          global-json-file: global.json
+
+      # A project with UseMaui does not restore without a .NET MAUI workload, even for plain net10.0.
+      # On Linux, maui-android is the one that brings it.
+      - name: Install the MAUI workload
+        run: dotnet workload install maui-android
 
       # DocFX at the version dotnet-tools.json pins.
       - name: Restore tools

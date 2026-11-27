@@ -46,8 +46,10 @@ dotnet docfx docfx.json --serve    # builds, then serves it at http://localhost:
 
 The build must finish with 0 warnings; the workflow builds with `--warningsAsErrors`, so a warning
 fails the pull request's check and keeps the change from being published. DocFX reads the projects under `external/` for their plain
-`net10.0` target (`TargetFramework` in `docfx.json`), so it needs the .NET SDK and no .NET MAUI
-workload.
+`net10.0` target (`TargetFramework` in `docfx.json`). Even so, a project with `UseMaui` restores
+only where a .NET MAUI workload is installed, so the workflow installs `maui-android`. `global.json`
+holds the same SDK as the library's; when the submodule moves to a tag whose `global.json` changed,
+change this one with it.
 
 ## The library, through the submodule
 
@@ -69,7 +71,7 @@ workflow that publishes the site -- and what tells Claude what to do. The site c
 name, so a page slipped into it misleads readers under that name.
 
 These are the paths that matter: `.claude/`, `.vscode/`, `.mcp.json`, every `CLAUDE.md`,
-`.github/`, `docfx.json`, `dotnet-tools.json`, `.gitmodules`, `.gitattributes` and `.editorconfig`.
+`.github/`, `docfx.json`, `dotnet-tools.json`, `global.json`, `.gitmodules`, `.gitattributes` and `.editorconfig`.
 `permissions.ask` in `.claude/settings.json` makes Claude ask before it edits one, and before it
 pushes or calls `gh api`. `gh pr merge` is denied: the maintainer merges. The ask rules cover
 Claude's own editing tools only, which is one more reason to write files with Write and Edit.
