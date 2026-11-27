@@ -57,6 +57,9 @@
       "_appFooter": "SumireCraft is made by StartBits.",
       "_enableSearch": true,
       "_disableContribution": true
+    },
+    "sitemap": {
+      "baseUrl": "https://startbits.github.io/sumirecraft-site/"
     }
   }
 }

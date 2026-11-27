@@ -1,0 +1,79 @@
+name: Pages
+
+# Builds the site for every pull request into main, and on a push to main builds it again and
+# publishes it to GitHub Pages. A warning fails the build, so a broken link never goes out.
+#
+# Run by hand (Run workflow, on the Actions tab) on main, it publishes main again; on any other
+# branch it only builds.
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+env:
+  DOTNET_NOLOGO: true
+  DOTNET_CLI_TELEMETRY_OPTOUT: true
+  DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true
+
+# Read access alone, whatever the repository's default for workflows says. Only the deploy job
+# below is given more, and it runs no code from the repository.
+permissions:
+  contents: read
+
+# A pull request's newer push replaces its older build. Publishing is never cut off halfway.
+concurrency:
+  group: pages-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+# Every action is named by its full commit SHA, with its version in a comment beside it.
+jobs:
+  # The rulesets require a check called build, so this job keeps its name.
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          # The library, at the release tag the submodule is held at.
+          submodules: true
+          persist-credentials: false
+
+      # The SDK the library itself builds with, so DocFX reads its projects as its own build does.
+      - name: Setup .NET
+        uses: actions/setup-dotnet@0f4a354dd5547a28c70b7853dbd95d5b67886e73 # v6.1.0
+        with:
+          global-json-file: external/SumireCraft.Maui/global.json
+
+      # DocFX at the version dotnet-tools.json pins.
+      - name: Restore tools
+        run: dotnet tool restore
+
+      - name: Build the site
+        run: dotnet docfx docfx.json --warningsAsErrors
+
+      - name: Upload the site
+        if: github.event_name != 'pull_request'
+        uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0
+        with:
+          path: _site
+
+  deploy:
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+    needs: build
+    runs-on: ubuntu-latest
+
+    # What deploy-pages needs to publish, and nothing more.
+    permissions:
+      pages: write
+      id-token: write
+
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - name: Publish to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346 # v5.0.1

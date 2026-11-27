@@ -1,0 +1,24 @@
+# Keeps the actions the workflow uses up to date. Dependabot keeps each one pinned by its full commit
+# SHA and rewrites the version in the comment beside it.
+#
+# Not the submodule: it follows a branch, and the site follows release tags (CLAUDE.md). Not DocFX
+# either: it is raised by hand, a week after a release, in dotnet-tools.json.
+version: 2
+updates:
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+    # A version a week old, not one released yesterday: a hijacked release is usually found and
+    # pulled within days, and one of these actions publishes the site.
+    cooldown:
+      default-days: 7
+    # Minor and patch updates in one pull request a week. A major version comes in a pull request of
+    # its own, so that it can wait without holding the rest back.
+    groups:
+      actions:
+        patterns:
+          - '*'
+        update-types:
+          - minor
+          - patch
