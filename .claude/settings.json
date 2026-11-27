@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "permissions": {
+    "ask": [
+      "Edit(/.claude/**)",
+      "Edit(/.vscode/**)",
+      "Edit(/.mcp.json)",
+      "Edit(**/CLAUDE.md)",
+      "Edit(**/CLAUDE.local.md)",
+      "Edit(/.github/**)",
+      "Edit(/docfx.json)",
+      "Edit(/dotnet-tools.json)",
+      "Edit(/.gitmodules)",
+      "Edit(/.gitattributes)",
+      "Edit(/.editorconfig)",
+      "Bash(git push)",
+      "Bash(git push *)",
+      "Bash(git -C * push*)",
+      "PowerShell(git push)",
+      "PowerShell(git push *)",
+      "PowerShell(git -C * push*)",
+      "Bash(gh api *)",
+      "Bash(gh workflow run *)",
+      "Bash(gh secret *)",
+      "Bash(gh repo edit *)",
+      "PowerShell(gh api *)",
+      "PowerShell(gh workflow run *)",
+      "PowerShell(gh secret *)",
+      "PowerShell(gh repo edit *)"
+    ],
+    "deny": [
+      "Bash(gh pr merge *)",
+      "PowerShell(gh pr merge *)"
+    ]
+  }
+}
