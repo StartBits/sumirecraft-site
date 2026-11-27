@@ -1,0 +1,8 @@
+# What DocFX builds: the site itself, and the API pages it writes from the sources.
+_site/
+api/*.yml
+api/.manifest
+
+# What restoring and loading the projects leaves behind.
+obj/
+bin/

@@ -1,0 +1,16 @@
+# Normalize every text file to LF, both in the repository and in the working tree, so the
+# sources are byte-identical on Windows, macOS and Linux. This overrides core.autocrlf.
+* text=auto eol=lf
+
+*.md        text
+*.yml       text
+*.json      text
+*.css       text
+*.js        text
+*.html      text
+*.svg       text
+
+*.png       binary
+*.gif       binary
+*.jpg       binary
+*.ico       binary
