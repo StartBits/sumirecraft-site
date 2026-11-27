@@ -9,6 +9,7 @@
       "Edit(**/CLAUDE.local.md)",
       "Edit(/.github/**)",
       "Edit(/docfx.json)",
+      "Edit(/template/**)",
       "Edit(/dotnet-tools.json)",
       "Edit(/global.json)",
       "Edit(/.gitmodules)",

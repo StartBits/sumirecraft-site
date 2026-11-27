@@ -29,6 +29,7 @@ docfx.json                   what DocFX reads and how it builds the site
 index.md, toc.yml            the landing page and the top navigation
 docs/                        the guides, with their own toc.yml
 api/index.md                 the front page of the API reference; DocFX writes the rest of api/
+template/public/main.css     the site's own styles, on top of DocFX's modern template
 dotnet-tools.json            the DocFX version, pinned
 .github/workflows/pages.yml  builds every pull request; publishes main to GitHub Pages
 .github/dependabot.yml       keeps the workflow's actions current, a week after each release
@@ -71,7 +72,8 @@ workflow that publishes the site -- and what tells Claude what to do. The site c
 name, so a page slipped into it misleads readers under that name.
 
 These are the paths that matter: `.claude/`, `.vscode/`, `.mcp.json`, every `CLAUDE.md`,
-`.github/`, `docfx.json`, `dotnet-tools.json`, `global.json`, `.gitmodules`, `.gitattributes` and `.editorconfig`.
+`.github/`, `docfx.json`, `template/` (its scripts run in every reader's browser),
+`dotnet-tools.json`, `global.json`, `.gitmodules`, `.gitattributes` and `.editorconfig`.
 `permissions.ask` in `.claude/settings.json` makes Claude ask before it edits one, and before it
 pushes or calls `gh api`. `gh pr merge` is denied: the maintainer merges. The ask rules cover
 Claude's own editing tools only, which is one more reason to write files with Write and Edit.

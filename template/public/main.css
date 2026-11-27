@@ -1,0 +1,9 @@
+/* The site's own additions to DocFX's modern template, which loads this file after its own. */
+
+/* The package icon is a large PNG; in the navigation bar it is a small mark beside the name. */
+#logo {
+  width: 32px;
+  height: 32px;
+  margin-right: 0.5rem;
+  border-radius: 6px;
+}
