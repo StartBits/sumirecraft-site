@@ -60,6 +60,13 @@ change this one with it.
 - Moving to a new release is one commit: `git -C external/SumireCraft.Maui fetch --tags`, then
   `git -C external/SumireCraft.Maui checkout <tag>`, then `git add external/SumireCraft.Maui`. Only
   a `v*` tag, never a branch.
+- Before that commit, read what changed in the library between the two tags, above all what a build
+  reads: `git -C external/SumireCraft.Maui diff <old tag> <new tag> -- '*.props' '*.targets'
+  '*.csproj' '*.slnx' global.json nuget.config Directory.Build.rsp .editorconfig build/`. DocFX
+  restores and loads those projects in the workflow's build job, the one whose output is published,
+  so a line slipped into one of them runs there and can change the site itself. Tell the maintainer
+  what changed, and stop on anything that runs a command, reaches the network or adds a package
+  source. The pull request that moves the tag says which tags it moves between.
 - A page links to a picture by its path inside the submodule
   (`external/SumireCraft.Maui/assets/hero.gif`). `docfx.json` publishes the folder under `images/`
   and DocFX rewrites the link, so the link check still sees the file.
@@ -81,6 +88,11 @@ Claude's own editing tools only, which is one more reason to write files with Wr
 
 `main` takes changes only through pull requests, and only once the `build` check has passed; it
 cannot be force-pushed or deleted. Publishing runs only from `main`.
+
+The workflow holds no secrets -- none in the repository, none from the organization, none in the
+`github-pages` environment -- and its build job's token only reads. Keep it that way: the library's
+build files run in that job, so any secret added there, for whatever reason, would be within their
+reach. Only the deploy job may publish, and it runs nothing from either repository.
 
 The domain is set in the repository's Pages settings, not in a `CNAME` file, which a site published
 by a workflow does not read. Its DNS record is a CNAME from `sumirecraft` to `startbits.github.io`.
