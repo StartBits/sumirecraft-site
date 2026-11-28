@@ -21,6 +21,7 @@
       {
         "files": [
           "index.md",
+          "about.md",
           "toc.yml",
           "docs/**/*.{md,yml}",
           "api/**/*.{md,yml}"
@@ -55,7 +56,7 @@
       "_appTitle": "SumireCraft",
       "_appLogoPath": "images/icon.png",
       "_appFaviconPath": "images/icon.png",
-      "_appFooter": "SumireCraft is made by StartBits.",
+      "_appFooter": "Made by StartBits with <a href=\"https://claude.com/claude-code\">Claude Code</a>.",
       "_enableSearch": true,
       "_disableContribution": true
     },
